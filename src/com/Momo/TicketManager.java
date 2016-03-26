@@ -3,10 +3,11 @@ import java.util.*;
 
 public class TicketManager {
 
+   private static LinkedList<Ticket> ticketQueue;
     public static void main(String[] args) {
         // write your code here
+         ticketQueue = new LinkedList<Ticket>();
 
-        LinkedList<Ticket> ticketQueue = new LinkedList<Ticket>();
 
         Scanner scan = new Scanner(System.in);
         int task;
@@ -33,7 +34,15 @@ public class TicketManager {
 
             } else if (task == 2) {
                 //delete a ticket
-                deleteTicket(ticketQueue);
+                System.out.println("Enter 1 to delete by name\n2 for id");
+                int choice = scan.nextInt();
+
+                if (choice == 1) {
+                    deleteTicketByIssue();
+
+                } else if (choice == 2) {
+                    deleteTicket(ticketQueue);
+                }
 
             } else if (task == 4) {
                 //Quit. Future prototype may want to save all tickets to a file
@@ -50,6 +59,7 @@ public class TicketManager {
         scan.close();
 
     }
+
     // A method that deletes ticket based on the ticket number provided by the user
     protected static void deleteTicket(LinkedList<Ticket> ticketQueue) {
         printAllTickets(ticketQueue);   //display list for user
@@ -70,15 +80,16 @@ public class TicketManager {
                 if (ticket.getTicketID() == deleteID) {
                     found = true;
                     ticketQueue.remove(ticket);
+                    System.out.println(ticket.getReporter());
                     System.out.println(String.format("Ticket %d deleted", deleteID));
                     break; //don't need loop any more.
                 }
             }
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
 
             System.out.println("Please enter a valid number");
 
-        }catch (InputMismatchException ne){
+        } catch (InputMismatchException ne) {
             System.out.println("Please enter a valid number");
         }
 
@@ -100,19 +111,17 @@ public class TicketManager {
                         break; //don't need loop any more.
                     }
                 }
-            }catch (NumberFormatException e){
+            } catch (NumberFormatException e) {
 
                 System.out.println("Please enter a valid number");
 
-            }catch (InputMismatchException ne){
+            } catch (InputMismatchException ne) {
                 System.out.println("Please enter a valid number");
             }
-            //TODO – re-write this method to ask for ID again if not found
         }
         printAllTickets(ticketQueue);  //print updated list
 
     }
-
 
     //Move the adding ticket code to a method
     protected static void addTickets(LinkedList<Ticket> ticketQueue) {
@@ -147,13 +156,49 @@ public class TicketManager {
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Please re-enter ticket because number wasn't valid number");
-            } catch(InputMismatchException mne){
+            } catch (InputMismatchException mne) {
                 System.out.println("Please re-enter ticket because number wasn't valid number");
+            }
+
         }
 
     }
 
-}
+    private static LinkedList<Ticket> searchTicketByIssue(String issue) {
+        LinkedList<Ticket> searchResults = new LinkedList<>();
+
+        for (Ticket ticket : ticketQueue) {
+            if (ticket.getDescription().toLowerCase().contains(issue)) {
+                searchResults.add(ticket);
+            }
+        }
+
+        return searchResults;
+    }
+
+
+    private static void deleteTicketByIssue() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter the issue you want to search for");
+        String issue = scanner.nextLine();
+
+       LinkedList<Ticket> matchingTickets = searchTicketByIssue(issue);
+
+        if (matchingTickets.isEmpty()) {
+            System.out.println("No matching tickets found.");
+            return;
+        }
+        else {
+            deleteTicket(matchingTickets);
+        }
+    }
+
+
+
+
+
+
 
     protected static void printAllTickets(LinkedList<Ticket> tickets) {
         System.out.println(" ------- All open tickets ----------");
@@ -165,5 +210,7 @@ public class TicketManager {
         System.out.println(" ------- End of ticket list ----------");
 
     }
+
+
 
 }

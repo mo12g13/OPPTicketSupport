@@ -61,6 +61,14 @@ public class Ticket {
         this.ticketID = ticketID;
     }
 
+    public int getPriority() {
+        return priority;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
+
     //Called automatically if a Ticket object is an argument to System.out.println
     public String toString(){
         return("ID : " +this.ticketID + " Issues: "+ this.description + " Priority: " + this.priority + " Reported by: "
