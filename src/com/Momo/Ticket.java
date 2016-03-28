@@ -25,7 +25,8 @@ public class Ticket {
 
     //A constructor would be useful
 
-    public Ticket(String desc, int p, String rep, Date date) {
+    public Ticket(String desc, int p, String rep,Date date)
+    {
         this.description = desc;
         this.priority = p;
         this.reporter = rep;
