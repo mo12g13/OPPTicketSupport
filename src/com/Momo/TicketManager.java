@@ -2,11 +2,13 @@ package com.Momo;
 import java.util.*;
 
 public class TicketManager {
-
    private static LinkedList<Ticket> ticketQueue;
+
     public static void main(String[] args) {
         // write your code here
-         ticketQueue = new LinkedList<Ticket>();
+       ticketQueue = new LinkedList<Ticket>();
+
+
 
 
         Scanner scan = new Scanner(System.in);
@@ -17,7 +19,7 @@ public class TicketManager {
 
             while (true) {
                 try {
-                    System.out.println("1. Enter Ticket\n2. Delete Ticket\n3. Display All Tickets\n4. Quit");
+                    System.out.println("1. Enter Ticket\n2. Delete Ticket by ID\n3. Delete by Issue\n4 Display All Tickets\n5. Quit");
                     task = Integer.parseInt(scan.nextLine());
 
                     if (task < 1 || task > 6) throw new Exception();
@@ -32,19 +34,23 @@ public class TicketManager {
                 //Call addTickets, which will let us enter any number of new tickets
                 addTickets(ticketQueue);
 
+
+
             } else if (task == 2) {
-                //delete a ticket
-                System.out.println("Enter 1 to delete by name\n2 for id");
-                int choice = scan.nextInt();
+           deleteTicket(ticketQueue);
 
-                if (choice == 1) {
-                    deleteTicketByIssue();
 
-                } else if (choice == 2) {
-                    deleteTicket(ticketQueue);
-                }
+            }
 
-            } else if (task == 4) {
+            else if(task ==3){
+            deleteTicketByIssue();            }
+
+            else if(task==4){
+                printAllTickets(ticketQueue);
+            }
+
+
+            else if (task == 5) {
                 //Quit. Future prototype may want to save all tickets to a file
                 System.out.println("Quitting program");
                 break;
@@ -163,36 +169,36 @@ public class TicketManager {
         }
 
     }
-
-    private static LinkedList<Ticket> searchTicketByIssue(String issue) {
-        LinkedList<Ticket> searchResults = new LinkedList<>();
-
-        for (Ticket ticket : ticketQueue) {
-            if (ticket.getDescription().toLowerCase().contains(issue)) {
-                searchResults.add(ticket);
+    //Search for the Issue in the ticketQueue and add it to the ticket found List and return it.
+    private static LinkedList<Ticket> searchTicketByIssue(String name){
+        LinkedList<Ticket> ticketFound = new LinkedList<Ticket>();
+        for(Ticket ticket: ticketQueue){
+            if(ticket.getDescription().equalsIgnoreCase(name)){
+                ticketFound.add(ticket);
             }
         }
-
-        return searchResults;
+        return ticketFound;
     }
-
-
-    private static void deleteTicketByIssue() {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Enter the issue you want to search for");
-        String issue = scanner.nextLine();
-
-       LinkedList<Ticket> matchingTickets = searchTicketByIssue(issue);
-
-        if (matchingTickets.isEmpty()) {
-            System.out.println("No matching tickets found.");
+//Search for the issue and if it exist, run the deleteTicket method and deleted the matching that was found
+    //If it isn't in the list, return the string stating that the issue wasn't found.
+    private static void deleteTicketByIssue(){
+        Scanner input = new Scanner(System.in);
+        System.out.println("Please enter the name of the issue you want to search ");
+        String myIssue = input.nextLine();
+        LinkedList<Ticket> matchingFound = searchTicketByIssue(myIssue);
+        if(matchingFound.isEmpty()){
+            System.out.println("No issue matching "+ myIssue + "was found");
             return;
+
         }
-        else {
-            deleteTicket(matchingTickets);
-        }
+
+            deleteTicket(matchingFound);
+
     }
+
+
+
+
 
 
 
@@ -210,6 +216,8 @@ public class TicketManager {
         System.out.println(" ------- End of ticket list ----------");
 
     }
+
+
 
 
 

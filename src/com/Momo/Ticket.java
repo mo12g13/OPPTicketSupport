@@ -1,5 +1,6 @@
 package com.Momo;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -14,6 +15,10 @@ public class Ticket {
     private Date dateReported;
 
     protected int ticketID;
+    private String status;  // not required by question, but prompted by my response to essay portion.
+    private String resolution;
+    private LocalDateTime dateResolved;
+
 
 
     //We can autogenerate get and set methods if and when we need
@@ -27,6 +32,8 @@ public class Ticket {
         this.dateReported = date;
         this.ticketID = staticTicketIDCounter;
         staticTicketIDCounter++;
+
+        this.status = "active";
     }
 
     public String getReporter() {
@@ -68,6 +75,9 @@ public class Ticket {
     public void setPriority(int priority) {
         this.priority = priority;
     }
+
+
+
 
     //Called automatically if a Ticket object is an argument to System.out.println
     public String toString(){
