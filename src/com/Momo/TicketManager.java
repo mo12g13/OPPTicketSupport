@@ -6,7 +6,7 @@ public class TicketManager {
 
     public static void main(String[] args) {
         // write your code here
-              ticketQueue = new LinkedList<Ticket>();
+        ticketQueue = new LinkedList<Ticket>();
         Scanner scan = new Scanner(System.in);
 
         int task;
@@ -26,7 +26,6 @@ public class TicketManager {
 
                 }
             }
-
             if (task == 1) {
                 //Call addTickets, which will let us enter any number of new tickets
                 addTickets(ticketQueue);

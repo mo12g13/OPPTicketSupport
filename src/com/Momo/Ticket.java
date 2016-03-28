@@ -15,9 +15,6 @@ public class Ticket {
     private Date dateReported;
 
     protected int ticketID;
-    private String status;  // not required by question, but prompted by my response to essay portion.
-    private String resolution;
-    private LocalDateTime dateResolved;
 
 
 
@@ -34,7 +31,7 @@ public class Ticket {
         this.ticketID = staticTicketIDCounter;
         staticTicketIDCounter++;
 
-        this.status = "active";
+
     }
 
     public String getReporter() {
